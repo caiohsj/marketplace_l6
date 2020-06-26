@@ -32,12 +32,6 @@
                 {{$message}}
             </div>
         @enderror
-        <input type="text" name="slug" placeholder="Slug" class="form-control mb-1 @error('slug') is-invalid @enderror" value="{{old('slug')}}"/>
-        @error('slug')
-            <div class="invalid-feedback mb-3">
-                {{$message}}
-            </div>
-        @enderror
         <input type="submit" value="Enviar" class="btn btn-success btn-block">
     </form>
 @endsection

@@ -28,13 +28,6 @@
             <label for=""></label>
             <input type="file" name="photos[]" class="form-control" multiple>
         </div>
-
-        <input type="text" name="slug" placeholder="Slug" class="form-control mb-2 @error('slug') is-invalid @enderror" value="{{$product->slug}}"/>
-        @error('slug')
-            <div class="invalid-feedback mb-3">
-                {{$message}}
-            </div>
-        @enderror
         <textarea name="body" id="bodyProduct" cols="30" rows="10" class="form-control mb-2 @error('body') is-invalid @enderror" placeholder="Conteúdo">{{$product->body}}</textarea>
         @error('body')
             <div class="invalid-feedback mb-3">
