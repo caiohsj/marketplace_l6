@@ -13,6 +13,12 @@
 
 Route::get('/', 'HomeController@index')->name('site');
 
+Route::get('/produto/{slug}', 'HomeController@single')->name('single');
+
+Route::group(['prefix' => 'cart'], function () {
+    Route::post('add', 'CartController@add')->name('cart.add');
+});
+
 Route::get('/admin', function () {
     return view('home');
 })->name('home')->middleware('auth');

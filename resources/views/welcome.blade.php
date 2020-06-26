@@ -11,8 +11,9 @@
                 @endif
                 <div class="card-body">
                     <h5 class="card-title">{{$product->name}}</h5>
+                    <h6>R$ {{number_format($product->price, 2, ',', '.')}}</h3>
                 <p class="card-text">{{$product->description}}</p>
-                    <a href="#" class="btn btn-primary">Comprar</a>
+                    <a href="{{route('single', ['slug' => $product->slug])}}" class="btn btn-info">Info</a>
                 </div>
             </div>
         @endforeach
