@@ -2,7 +2,7 @@
     
 @section('content')
     <h1 class="display-3 mt-2 text-center">Nova Loja</h1>
-    <form action="{{route('admin.stores.store')}}" method="post" class="mt-3">
+    <form action="{{route('admin.stores.store')}}" method="post" class="mt-3" enctype="multipart/form-data">
         @csrf
         <input type="text" name="name" placeholder="Nome da Loja" class="form-control mb-2 @error('name') is-invalid @enderror" value="{{old('name')}}"/>
         @error('name')
@@ -22,6 +22,10 @@
                 {{$message}}
             </div>
         @enderror
+        <div class="form-group">
+            <label for=""></label>
+            <input type="file" name="logo" class="form-control">
+        </div>
         <input type="text" name="mobile_phone" placeholder="Celular" class="form-control mb-1 @error('mobile_phone') is-invalid @enderror" value="{{old('mobile_phone')}}"/>
         @error('mobile_phone')
             <div class="invalid-feedback mb-3">

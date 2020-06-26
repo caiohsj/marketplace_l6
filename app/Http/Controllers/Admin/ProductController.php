@@ -8,9 +8,11 @@ use App\Product;
 use App\Store;
 use App\Category;
 use App\Http\Requests\ProductRequest;
+use App\Traits\UploadTrait;
 
 class ProductController extends Controller
 {
+    use UploadTrait;
     private $product;
 
     public function __construct(Product $product)
@@ -60,6 +62,10 @@ class ProductController extends Controller
         $store = $user->store;
         $product = $store->products()->create($data);
         $category = $product->categories()->sync($data['categories']);
+        if ($request->hasFile('photos')) {
+            $images = $this->imageUpload($request->file('photos'), 'image');
+            $product->photos()->createMany($images);
+        }
         return redirect()->route('admin.products.index');
     }
 
@@ -98,11 +104,15 @@ class ProductController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, Product $product)
+    public function update(ProductRequest $request, Product $product)
     {
         $data = $request->all();
         $product->update($data);
         $category = $product->categories()->sync($data['categories']);
+        if ($request->hasFile('photos')) {
+            $images = $this->imageUpload($request->file('photos'), 'image');
+            $product->photos()->createMany($images);
+        }
         flash('Produto Atualizado!');
         return redirect()->route('admin.products.index');
     }

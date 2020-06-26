@@ -11,7 +11,9 @@
 |
 */
 
-Route::get('/', function () {
+Route::get('/', 'HomeController@index')->name('site');
+
+Route::get('/admin', function () {
     return view('home');
 })->name('home')->middleware('auth');
 
@@ -22,6 +24,8 @@ Route::group(['middleware' => ['auth']], function () {
         Route::resource('products', 'ProductController')->names('admin.products');
 
         Route::resource('categories', 'CategoryController')->names('admin.categories');
+
+        Route::post('photos/remove/{productPhotoId}', 'ProductPhotoController@removePhoto')->name('admin.product.photo.remove');
     });
 });
 

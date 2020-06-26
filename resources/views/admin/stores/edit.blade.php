@@ -2,7 +2,7 @@
     
 @section('content')
     <h1 class="display-3 mt-2 text-center">Nova Loja</h1>
-    <form action="{{route('admin.stores.update',['store'=>$store->id])}}" method="post" class="mt-3">
+    <form action="{{route('admin.stores.update',['store'=>$store->id])}}" method="post" class="mt-3" enctype="multipart/form-data">
         @csrf
         @method('PUT')
         <input type="text" name="name" placeholder="Nome da Loja" class="form-control mb-2 @error('name') is-invalid @enderror" value="{{$store->name}}"/>
@@ -19,6 +19,18 @@
         @enderror
         <input type="text" name="phone" placeholder="Telefone da Loja" class="form-control mb-2 @error('phone') is-invalid @enderror" value="{{$store->phone}}"/>
         @error('phone')
+            <div class="invalid-feedback mb-3">
+                {{$message}}
+            </div>
+        @enderror
+        @if ($store->logo)
+            <img src="{{asset('storage/'.$store->logo)}}" alt="Logo"/>
+        @endif
+        <div class="form-group">
+            <label for=""></label>
+            <input type="file" name="logo" class="form-control @error('logo') is-invalid @enderror">
+        </div>
+        @error('logo')
             <div class="invalid-feedback mb-3">
                 {{$message}}
             </div>

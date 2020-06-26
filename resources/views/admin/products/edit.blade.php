@@ -1,8 +1,8 @@
 @extends('layouts.app')
     
 @section('content')
-    <h1 class="display-3 mt-2 text-center">Nova Loja</h1>
-    <form action="{{route('admin.products.update',['product'=>$product->id])}}" method="post" class="mt-3">
+    <h1 class="display-3 mt-2 text-center">Editar Produto</h1>
+    <form action="{{route('admin.products.update',['product'=>$product->id])}}" method="post" class="mt-3" enctype="multipart/form-data">
         @csrf
         @method('PUT')
         <input type="text" name="name" placeholder="Nome do Produto" class="form-control mb-2 @error('name') is-invalid @enderror" value="{{$product->name}}"/>
@@ -19,10 +19,16 @@
         @enderror
         <input type="text" name="price" placeholder="Preço" class="form-control mb-2 @error('price') is-invalid @enderror" value="{{$product->price}}"/>
         @error('price')
-            <div class="invalid-feedback mb-3">
+            <div class="invalid-feedback">
                 {{$message}}
             </div>
         @enderror
+
+        <div class="form-group">
+            <label for=""></label>
+            <input type="file" name="photos[]" class="form-control" multiple>
+        </div>
+
         <input type="text" name="slug" placeholder="Slug" class="form-control mb-2 @error('slug') is-invalid @enderror" value="{{$product->slug}}"/>
         @error('slug')
             <div class="invalid-feedback mb-3">
@@ -40,6 +46,15 @@
                 <option value="{{$category->id}}" @if($product->categories->contains($category)) selected @endif>{{$category->name}}</option>
             @endforeach
         </select>
+        <div class="row">
+            @foreach ($product->photos as $photo)
+                <img src="{{asset('storage/'.$photo->image)}}" alt="" class="img-fluid">
+                <form action="{{route('admin.product.photo.remove', ['productPhotoId' => $photo->id])}}" method="POST">
+                    @csrf
+                    <button type="submit" class="btn btn-danger">-</button>
+                </form>
+            @endforeach
+        </div>
         <input type="submit" value="Enviar" class="btn btn-success btn-block">
     </form>
 @endsection
