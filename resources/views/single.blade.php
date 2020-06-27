@@ -3,7 +3,11 @@
 @section('content')
     <div class="row mb-2">
         <div class="col-md-4">
-            <img src="{{asset('storage/'.$product->photos->first()->image)}}" alt="Produto" class="img-fluid"/>
+            @if ($product->photos->count())
+                <img src="{{asset('storage/'.$product->photos->first()->image)}}" alt="Produto" class="img-fluid"/>
+            @else
+                <img src="{{asset('img/not-found.png')}}" alt="Sem Produto" class="img-fluid"/>
+            @endif
         </div>
         <div class="col-md-8">
             <h2>{{$product->name}}</h2>
