@@ -27,6 +27,15 @@ class CartController extends Controller
         return redirect()->route('cart.index');
     }
 
+    public function cancel()
+    {
+        if (session()->has('cart')) {
+            session()->forget('cart');
+            flash('Compra Cancelada')->warning();
+        }
+        return redirect()->route('site');
+    }
+
     public function index()
     {
         if (session()->has('cart')) {
