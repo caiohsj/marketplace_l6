@@ -16,12 +16,26 @@ class CartController extends Controller
             session()->put('cart', $cart);
         }
         flash('Produto adicionado ao carrinho')->success();
-        return redirect()->route('cart.home');
+        return redirect()->route('cart.index');
     }
 
     public function index()
     {
-        $products = session()->get('cart');
+        if (session()->has('cart')) {
+            $products = session()->get('cart');
+        } else {
+            $products = [];
+        }
         return view('cart', compact('products'));
+    }
+
+    public function remove($slug)
+    {
+        $products = session()->get('cart');
+        $products = array_filter($products, function ($row) use ($slug){
+            return $row['slug'] != $slug;
+        });
+        session()->put('cart', $products);
+        return redirect()->route('cart.index');
     }
 }

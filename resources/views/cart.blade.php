@@ -1,7 +1,7 @@
 @extends('layouts/front')
 
 @section('content')
-    <h2>Carrinho ({{count($products)}} produtos)</h2>
+    <h2>Carrinho</h2>
     <hr>
     <div class="row">
         <table class="table col-12">
@@ -11,6 +11,7 @@
                     <th>Preço</th>
                     <th>Quantidade</th>
                     <th>SubTotal</th>
+                    <th></th>
                 </tr>
             </thead>
             <tbody>
@@ -27,11 +28,14 @@
                             $total += $subTotal;
                         @endphp
                         <td>R$ {{number_format($subTotal, 2, ',', '.')}}</td>
+                        <td>
+                            <a href="{{route('cart.remove', ['slug' => $product['slug']])}}" class="btn btn-danger btn-sm">REMOVER</a>
+                        </td>
                     </tr>
                 @endforeach
                 <tr>
                     <td colspan="3">Total: </td>
-                    <td class="bg-info text-white">R$ {{number_format($total, 2, ',', '.')}}</td>
+                    <td colspan="2" class="bg-info text-white">R$ {{number_format($total, 2, ',', '.')}}</td>
                 </tr>
             </tbody>
         </table>

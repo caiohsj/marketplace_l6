@@ -16,8 +16,9 @@ Route::get('/', 'HomeController@index')->name('site');
 Route::get('/produto/{slug}', 'HomeController@single')->name('single');
 
 Route::group(['prefix' => 'cart'], function () {
-    Route::post('add', 'CartController@add')->name('cart.add');
-    Route::get('/', 'CartController@index')->name('cart.home');
+    Route::post('/add', 'CartController@add')->name('cart.add');
+    Route::get('/', 'CartController@index')->name('cart.index');
+    Route::get('/remove/{slug}', 'CartController@remove')->name('cart.remove');
 });
 
 Route::get('/admin', function () {
