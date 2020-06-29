@@ -22,6 +22,10 @@ Route::group(['prefix' => 'cart'], function () {
     Route::get('/remove/{slug}', 'CartController@remove')->name('cart.remove');
 });
 
+Route::group(['prefix' => 'checkout'], function () {
+    Route::get('/', 'CheckoutController@index')->name('checkout.index');
+});
+
 Route::get('/admin', function () {
     return view('home');
 })->name('home')->middleware('auth');

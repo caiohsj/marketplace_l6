@@ -42,6 +42,6 @@
     </div>
     <div class="row">
         <a href="{{route('cart.cancel')}}" class="btn btn-secondary btn-lg">Cancelar Compra</a>
-        <a href="" class="btn btn-success btn-lg ml-auto">Concluir Compra</a>
+        <a href="{{route('checkout.index')}}" class="btn btn-success btn-lg ml-auto">Concluir Compra</a>
     </div>
 @endsection
