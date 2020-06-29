@@ -11,6 +11,17 @@ class CheckoutController extends Controller
         if (!auth()->check()) {
             return redirect()->route('login');
         }
+        $this->getPagseguroSessionCode();
         return view('checkout');
+    }
+
+    private function getPagseguroSessionCode()
+    {
+        if (!session()->has('pagseguroSessionCode')) {
+            $sessionCode = \PagSeguro\Services\Session::create(
+                \PagSeguro\Configuration\Configure::getAccountCredentials()
+            );
+           return session()->put('pagseguroSessionCode', $sessionCode->getResult());
+        }
     }
 }
