@@ -100,7 +100,7 @@
                 expirationMonth: document.querySelector('input[name=cardMonth]').value,
                 expirationYear: document.querySelector('input[name=cardYear]').value,
                 success: function(response) {
-                    console.log(response)
+                    proccessCheckout(response.card.token);
                 },
                 error: function(response) {
                     console.log(response)
@@ -108,14 +108,28 @@
             });
         });
 
-        function proccessCheckout() {
+        function proccessCheckout(token) {
+            let data = {
+                cardToken: token,
+                hash: PagSeguroDirectPayment.getSenderHash(),
+                installment: document.querySelector('select.select-installments').value,
+                _token: '{{csrf_token()}}'
+            }
+            $.ajax({
+                type: 'POST',
+                url: '{{route("checkout.proccess")}}',
+                data: data,
+                dataType: 'json',
+                success: function(response) {
 
+                }
+            });
         }
 
         function drawSelectInstallments(installments) {
             let select = '<label>Opções de Parcelamento:</label>';
 
-            select += '<select class="form-control">';
+            select += '<select class="form-control select-installments">';
 
             for(let l of installments) {
                 select += `<option value="${l.quantity}|${l.installmentAmount}">${l.quantity}x de ${l.installmentAmount} - Total fica ${l.totalAmount}</option>`;
