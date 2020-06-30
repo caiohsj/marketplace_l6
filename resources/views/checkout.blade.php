@@ -9,9 +9,18 @@
                 <div class="row">
                     <div class="col-md-9">
                         <div class="form-group">
-                            <label for="card_number">Número do Cartão</label> <span class="brand"></span>
-                            <input type="text" name="cardNumber" id="card_number" class="form-control"/>
+                            <label for="cardNumber">Número do Cartão</label> <span class="brand"></span>
+                            <input type="text" name="cardNumber" id="cardNumber" class="form-control"/>
                             <input type="hidden" name="cardBrand"/>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="col-md-9">
+                        <div class="form-group">
+                            <label for="cardName">Nome no Cartão</label> <span class="brand"></span>
+                            <input type="text" name="cardName" id="cardName" class="form-control"/>
                         </div>
                     </div>
                 </div>
@@ -57,6 +66,7 @@
     </script>
 
     <script>
+        let amountCheckout = {{$total}};
         let cardNumber = document.querySelector('input[name=cardNumber]');
         let spanBrand = document.querySelector('span.brand');
         let divInstallments = document.querySelector('div.installments');
@@ -68,7 +78,7 @@
                     success: function (response) {
                         let imgBrand = `<img src="https://stc.pagseguro.uol.com.br/public/img/payment-methods-flags/68x30/${response.brand.name}.png" />`;
                         spanBrand.innerHTML = imgBrand;
-                        getInstallments(100,response.brand.name);
+                        getInstallments(amountCheckout,response.brand.name);
                         document.querySelector('input[name=cardBrand]').value = response.brand.name;
                     },
                     error: function (response) {
@@ -113,6 +123,7 @@
                 cardToken: token,
                 hash: PagSeguroDirectPayment.getSenderHash(),
                 installment: document.querySelector('select.select-installments').value,
+                cardName: document.querySelector('input[name=cardName]').value,
                 _token: '{{csrf_token()}}'
             }
             $.ajax({
@@ -129,7 +140,7 @@
         function drawSelectInstallments(installments) {
             let select = '<label>Opções de Parcelamento:</label>';
 
-            select += '<select class="form-control select-installments">';
+            select += '<select class="form-control mb-3 select-installments">';
 
             for(let l of installments) {
                 select += `<option value="${l.quantity}|${l.installmentAmount}">${l.quantity}x de ${l.installmentAmount} - Total fica ${l.totalAmount}</option>`;
