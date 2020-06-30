@@ -39,6 +39,7 @@
                             <input type="text" name="card_cvv" id="card_cvv" class="form-control"/>
                         </div>
                     </div>
+                    <div class="col-md-12 installments"></div>
                 </div>
             </form>
         </div>
@@ -55,6 +56,7 @@
     <script>
         let cardNumber = document.querySelector('input[name=card_number]');
         let spanBrand = document.querySelector('span.brand');
+        let divInstallments = document.querySelector('div.installments');
         cardNumber.addEventListener('keyup', function () {
             if (cardNumber.value.length >= 6) {
                 PagSeguroDirectPayment.getBrand({
@@ -62,6 +64,7 @@
                     success: function (response) {
                         let imgBrand = `<img src="https://stc.pagseguro.uol.com.br/public/img/payment-methods-flags/68x30/${response.brand.name}.png" />`;
                         spanBrand.innerHTML = imgBrand;
+                        getInstallments(100,response.brand.name);
                     },
                     error: function (response) {
                         console.log(response);
@@ -69,5 +72,34 @@
                 });
             }
         });
+
+        function getInstallments(amount, brand) {
+            PagSeguroDirectPayment.getInstallments({
+                amount: amount,
+                brand: brand,
+                maxInstallmentNoInterest: 0,
+                success: function (response) {
+                    divInstallments.innerHTML = drawSelectInstallments(response.installments[brand]);
+                },
+                error: function (response) {
+
+                }
+            });
+        }
+
+        function drawSelectInstallments(installments) {
+            let select = '<label>Opções de Parcelamento:</label>';
+
+            select += '<select class="form-control">';
+
+            for(let l of installments) {
+                select += `<option value="${l.quantity}|${l.installmentAmount}">${l.quantity}x de ${l.installmentAmount} - Total fica ${l.totalAmount}</option>`;
+            }
+
+
+            select += '</select>';
+
+            return select;
+        }
     </script>
 @endsection
