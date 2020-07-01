@@ -1,5 +1,9 @@
 @extends('layouts/front')
 
+@section('styles')
+    <link rel="stylesheet" href="{{asset('css/toastr.css')}}">
+@endsection
+
 @section('content')
     <h2>Checkout</h2>
     <hr>
@@ -59,7 +63,11 @@
 
 @section('scripts')
     <script src="https://stc.sandbox.pagseguro.uol.com.br/pagseguro/api/v2/checkout/pagseguro.directpayment.js"></script>
-    <script src="{{asset('js/jquery.ajax.js')}}"></script>
+    <script
+        src="https://code.jquery.com/jquery-2.2.4.min.js"
+        integrity="sha256-BbhdlvQf/xTY9gja0Dq3HiwQF8LaCRTXxZKRutelT44="
+        crossorigin="anonymous"></script>
+    <script src="{{asset('js/toastr.js')}}"></script>
     <script>
         const sessionId = '{{session()->get('pagseguroSessionCode')}}';
         PagSeguroDirectPayment.setSessionId(sessionId);
@@ -132,7 +140,11 @@
                 data: data,
                 dataType: 'json',
                 success: function(response) {
-                    console.log(response);
+                    toastr.success('Pedido realizado com sucesso!', 'Pedido');
+                    window.location.href = '{{route("checkout.thanks")}}?order='+response.data.order;
+                },
+                error: function(response) {
+                    toastr.danger('Erro ao processar pedido!', 'Erro');
                 }
             });
         }

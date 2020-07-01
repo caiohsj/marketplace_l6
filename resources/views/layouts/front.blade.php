@@ -13,6 +13,7 @@
             margin-bottom: 40px;
         }
     </style>
+    @yield('styles')
 </head>
 <body>
 <nav class="navbar navbar-expand-lg navbar-light bg-light" style="margin-bottom: 40px;">
