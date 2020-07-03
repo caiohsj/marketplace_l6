@@ -15,7 +15,9 @@ Route::get('/', 'HomeController@index')->name('site');
 
 Route::get('/produto/{slug}', 'HomeController@single')->name('single');
 
-Route::get('/categoria/{slug}', 'CategoryController@index')->name('category.index');
+Route::get('/categoria/{slug}', 'CategoryController@single')->name('category.single');
+
+Route::get('/loja/{slug}', 'StoreController@single')->name('store.single');
 
 Route::group(['prefix' => 'cart'], function () {
     Route::post('/add', 'CartController@add')->name('cart.add');
