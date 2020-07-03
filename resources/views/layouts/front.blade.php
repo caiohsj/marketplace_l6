@@ -30,8 +30,8 @@
                 <a class="nav-link" href="{{route('site')}}">Home <span class="sr-only">(current)</span></a>
             </li>
             @foreach ($categories as $category)
-                <li class="nav-item @if(request()->is('/')) active @endif">
-                    <a class="nav-link" href="#">{{$category->name}}<span class="sr-only">(current)</span></a>
+                <li class="nav-item ">
+                    <a class="nav-link" href="{{route('category.index', ['slug' => $category->slug])}}">{{$category->name}}<span class="sr-only">(current)</span></a>
                 </li>
             @endforeach
         </ul>
