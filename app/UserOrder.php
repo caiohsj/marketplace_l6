@@ -13,8 +13,8 @@ class UserOrder extends Model
         return $this->belongsTo(User::class);
     }
 
-    public function store()
+    public function stores()
     {
-        return $this->belongsTo(Store::class);
+        return $this->belongsToMany(Store::class, 'order_store', 'order_id');
     }
 }
