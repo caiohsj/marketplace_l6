@@ -29,6 +29,6 @@ class AppServiceProvider extends ServiceProvider
 
         $categories = \App\Category::all();
 
-        view()->share('categories', $categories);
+        view()->composer('layouts.front', 'App\Http\Views\CategoryViewComposer@compose');
     }
 }
