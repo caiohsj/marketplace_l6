@@ -25,6 +25,9 @@
               <li class="nav-item">
                 <a class="nav-link @if (request()->is('admin/categories')) active @endif" href="{{route('admin.categories.index')}}">Categorias</a>
               </li>
+              <li class="nav-item">
+                <a class="nav-link @if (request()->is('admin/orders/my')) active @endif" href="{{route('admin.orders.index')}}">Pedidos</a>
+              </li>
             @endauth
           </ul>
           @auth

@@ -45,6 +45,8 @@ Route::group(['middleware' => ['auth']], function () {
         Route::resource('categories', 'CategoryController')->names('admin.categories');
 
         Route::post('photos/remove/{productPhotoId}', 'ProductPhotoController@removePhoto')->name('admin.product.photo.remove');
+
+        Route::get('orders/my', 'OrderController@index')->name('admin.orders.index');
     });
 });
 
