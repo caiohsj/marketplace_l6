@@ -12,7 +12,7 @@ class CartController extends Controller
         $productData = $request->get('product');
         $product = Product::whereSlug($productData['slug']);
         $count = $product->count();
-        if (!$count || $productData['amount'] == 0)
+        if (!$count || $productData['amount'] <= 0)
             return redirect()->route('site');
         
         $product = $product->first(['name', 'price', 'store_id'])->toArray();

@@ -5,7 +5,7 @@
         @foreach ($products as $product)
             <div class="card" style="width: 18rem; margin: 2rem;">
                 @if ($product->photos->count())
-                    <img class="card-img-top" src="{{asset('storage/'.$product->photos->first()->image)}}" alt="Produto">
+                    <img class="card-img-top" src="{{asset('storage/'.$product->thumb)}}" alt="Produto">
                 @else
                     <img class="card-img-top" src="{{asset('img/not-found.png')}}" alt="Not Found">
                 @endif

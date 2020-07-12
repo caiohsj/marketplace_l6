@@ -4,7 +4,7 @@
     <div class="row mb-2">
         <div class="col-md-4">
             @if ($product->photos->count())
-                <img src="{{asset('storage/'.$product->photos->first()->image)}}" alt="Produto" class="img-fluid"/>
+                <img src="{{asset('storage/'.$product->thumb)}}" alt="Produto" class="img-fluid"/>
             @else
                 <img src="{{asset('img/not-found.png')}}" alt="Sem Produto" class="img-fluid"/>
             @endif
